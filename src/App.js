@@ -1,13 +1,11 @@
 import React, { Component } from "react";
-import { v4 as uuidv4 } from "uuid";
+
 import "./App.css";
 import ContactForm from "./components/ContactForm";
 import Filter from "./components/Filter";
 import ContactList from "./components/ContactList";
-import {connect} from "react-redux"
-import userActions from "./redux/actions/userActions"
-
-
+import { connect } from "react-redux";
+import userActions from "./redux/actions/userActions";
 
 class App extends Component {
   // state = {
@@ -20,52 +18,50 @@ class App extends Component {
 
   //   filter: "",
   // };
-  
-//    componentDidMount(){
-// const renewContacts=JSON.parse(localStorage.getItem("contacts"))
-// if(renewContacts){
-//   this.setState(()=>({ contacts:[...renewContacts]}))
-// }
 
-//    }
+  //    componentDidMount(){
+  // const renewContacts=JSON.parse(localStorage.getItem("contacts"))
+  // if(renewContacts){
+  //   this.setState(()=>({ contacts:[...renewContacts]}))
+  // }
 
-//  componentDidUpdate(prevProps, prevState){
-//    const{contacts}=this.props
+  //    }
 
-// if(contacts!==prevState.contacts){
-//   localStorage.setItem("contacts", JSON.stringify(contacts))
-// }
+  //  componentDidUpdate(prevProps, prevState){
+  //    const{contacts}=this.props
 
-//  }
+  // if(contacts!==prevState.contacts){
+  //   localStorage.setItem("contacts", JSON.stringify(contacts))
+  // }
 
+  //  }
 
   onHandleSubmit = (newContact) => {
     // console.log(newContact);
-    
+
     if (
       this.props.contacts.some(
-        el=> el.name.toLowerCase() === newContact.name.toLowerCase()
+        (el) => el.name.toLowerCase() === newContact.name.toLowerCase()
       )
     ) {
       alert(`${newContact.name} is already in contacts`);
       return;
     }
-    this.props.addContact(newContact)
+    this.props.addContact(newContact);
     // this.setState((prevState) => ({
     //   contacts: [...prevState.contacts, newContact],
     // }));
-     
   };
 
   onClickDelete = (id) => {
     // this.setState((prevState) => ({
     //   contacts: prevState.contacts.filter((el) => el.id !== id),
     // }));
-    this.props.deleteCont(id)
+    this.props.deleteCont(id);
   };
 
   handleFilter = (e) => {
-    this.props.filterAct(e.currentTarget.value )
+    this.props.filterAct(e.currentTarget.value);
   };
 
   render() {
@@ -91,14 +87,14 @@ class App extends Component {
     );
   }
 }
-const mapStateToProps=(state)=>({
-contacts:state.contacts.items,
-filter:state.contacts.filter
-})
-const mapDispatchToProps={
-addContact:userActions.addContact,
-deleteCont:userActions.deleteContact,
-filterAct:userActions.filterContacts
-}
+const mapStateToProps = (state) => ({
+  contacts: state.contacts.items,
+  filter: state.contacts.filter,
+});
+const mapDispatchToProps = {
+  addContact: userActions.addContact,
+  deleteCont: userActions.deleteContact,
+  filterAct: userActions.filterContacts,
+};
 
-export default  connect(mapStateToProps,mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
