@@ -40,23 +40,26 @@ import storage from "redux-persist/lib/storage";
 const contactsPersistConfig = {
   key: "contacts",
   storage,
-  blacklist:["filter"]
+  blacklist: ["filter"],
 };
 
 const contactsReducers = combineReducers({
-  items:  contactsReducer,
+  items: contactsReducer,
   filter: filterReducer,
 });
 
 const rootReducer = combineReducers({
-  contacts: persistReducer(contactsPersistConfig, contactsReducers)
+  contacts: persistReducer(contactsPersistConfig, contactsReducers),
 });
 
-const middleware = [...getDefaultMiddleware({serializableCheck: {
-    ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-  },}), logger];
-
-// const persistedReducer = persistReducer(persistConfig, rootReducer);
+const middleware = [
+  ...getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    },
+  }),
+  logger,
+];
 
 const store = configureStore({
   reducer: rootReducer,

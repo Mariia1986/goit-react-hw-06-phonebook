@@ -40,8 +40,7 @@ const addContact = createAction(add, ({ id, name, number }) => {
   };
 });
 
-const deleteContact= createAction(deleteUsers)
-const filterContacts=createAction(filter)
-
+const deleteContact = createAction(deleteUsers);
+const filterContacts = createAction(filter);
 
 export default { addContact, deleteContact, filterContacts };
