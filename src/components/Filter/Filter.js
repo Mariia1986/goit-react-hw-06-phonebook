@@ -1,20 +1,36 @@
-import React from "react";
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import s from "./Filter.module.css";
 import PropTypes from "prop-types";
+import userActions from "../../redux/actions/userActions";
 
-const Filter = ({ filter, search }) => {
-  return (
-    <label  className={s.filterLabel}>
-      Find contacts by name
-      <input
-        className={s.filterInput}
-        name="filter"
-        value={filter}
-        onChange={search}
-        type="text"
-      />
-    </label>
-  );
+class Filter extends Component {
+  handleFilter = (e) => {
+    this.props.filterAct(e.currentTarget.value);
+  };
+
+  render() {
+    return (
+      <label className={s.filterLabel}>
+        Find contacts by name
+        <input
+          className={s.filterInput}
+          name="filter"
+          value={this.props.filter}
+          onChange={this.handleFilter}
+          type="text"
+        />
+      </label>
+    );
+  }
+}
+
+const mapStateToProps = (state) => ({
+  contacts: state.contacts.items,
+  filter: state.contacts.filter,
+});
+const mapDispatchToProps = {
+  filterAct: userActions.filterContacts,
 };
 
 Filter.propTypes = {
@@ -22,4 +38,4 @@ Filter.propTypes = {
   search: PropTypes.func.isRequired,
 };
 
-export default Filter;
+export default connect(mapStateToProps, mapDispatchToProps)(Filter);
